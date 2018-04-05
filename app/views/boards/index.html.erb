@@ -1,0 +1,31 @@
+<!-- views/boards/index.html.erb -->
+
+<h1>게시판 글 모음</h1> <br>
+<a href='/boards/new'>게시글 새로 작성하기</a> <br> <br>
+
+<div class="container" style="margin-top: 30px border: 1px solid black">
+	<% @posts.each do |p| %>
+	<hr>
+	  <div> <a href='/boards/destroy/<%= p.id %>' data-method='DELETE'>삭제하기</a> </div>
+  	  <div> <a href='/boards/edit_view/<%= p.id %>'>수정하기</a> </div>
+
+  	  <br>
+	  <div> * 제목: <%= p.title %> </div>
+	  <div> * 내용: <%= p.content %> </div>
+	  <div> * 게시 날짜: <%= p.created_at %> </div>
+	  <br>
+	  <div> * 댓글: </div>
+	<% p.comments.each_with_index do |c, i| %>
+	  <div><%=i+1%>. <%=c.content%></div>
+	<% end %>
+
+	  <br>
+	  <form action='/boards/<%=p.id%>/comment_create' method='post'>
+	  	<div class="form-group">	
+	    	- 댓글달기 : <input type='text' name='comment_content' placeholder="여기다가 댓글 입력!!" />
+	    	<button>댓글 등록!</button>
+	  	</div>
+	  </form>	
+
+	<%end%>  
+</div>
